@@ -1,0 +1,4 @@
+FAIL2BAN:
+Un utilisateur malveillant pourrait écrire via la fonction openlog()/syslog() de PHP vers le syslog.
+
+Solution #1: Ce problème de sécurité peut être réglé via l'appartenance/les permissions de /dev/log, qui par défaut autorise le logging à tous les utilisateurs. Créez simplement un groupe log, et tous les démons de ce groupe ainsi que le root en seront ravis.

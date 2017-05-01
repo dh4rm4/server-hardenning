@@ -1,0 +1,80 @@
+- CHANGE PASSWORD:
+  - su
+  - sudo
+  - basic user: pi for raspbian
+
+- AUTOMATISATION OF TASK:
+	_ crontab -e
+	_ add rule: 0 0,6,12,18 * * * root /usr/bin/apt-get update && /usr/bin/apt-get upgrade -yy >/dev/null 2>&1
+(redirection to avoid to send email at each execution)
+	_ restrict crontab
+  		- cat [username] >> /etc/cron.deny
+
+- DISABLE IPV6
+	_ cat "net.ipv6.conf.all.disable_ipv6 = 1" >> /etc/sysctl.conf
+
+- DISABLE PING AND BRODCAST REQUEST
+  _ cat "#Ignore ICMP request:\n
+  		net.ipv4.icmp_echo_ignore_all = 1
+		#Ignore Broadcast request:
+		net.ipv4 .icmp_echo_ignore_broadcasts = 1# >> /etc/sysctl.conf"
+
+- PUT /boot IN READ ONLY
+  _ open /etc/fstab and change the line /boot with the value : 1 2
+
+
+CHECK:
+	_ USE Lynis to scan the system
+	  - git clone https://github.com/CISOfy/lynis/
+	  - sudo ./lynis audit system
+	  - ./lynis audit system
+
+SSHD_CONFIG:
+	CHANGE LOG BANNER
+	_ LogLevel VERBOSE
+	_ PermitRootLogin no
+	_ AllowTcpForwarding no
+	_ X11Forwarding no
+	_ change connection port
+CHECK LOCALES
+	  _ sudo dpkg-reconfigure locales
+	  _ add en_US.UTF-8
+
+LIMIT RIGHTS FOR CMD:
+	  -chmod o-x /usr/bin/gcc*
+	  -chmod o-x /usr/bin/make
+	  -chmod o-x /usr/bin/apt-get
+	  -chmod o-x /usr/bin/aptitude
+	  -chmod o-x /usr/bin/dpkg*
+	  -chmod o-x /usr/bin/fail2ban*
+	  -chmod o-x /bin/netstat
+	  -chmod o-x /usr/bin/crontab
+	  -chmod o-x /usr/bin/curl
+  	  -chmod o-x /usr/bin/wget
+	  -chmod o-x /usr/bin/locate
+	  -chmod o-x /usr/bin/logger
+
+CHECK LES SUID.
+
+INSTALLATION + CONFIG fail2ban
+	_creation domain name (no-ip)
+	_Installation server mail
+				  _anti-spam : postgrey
+				  _reception: dovecot-pop3d
+				  _postfix config (/etc/postfix/main.cf
+				  		   chmod 755 /etc/postfix
+						   chmod 644 /etc/postfix/*.cf
+						   chmod 755 /etc/postfix/postfix-script*
+						   chmod 755 /var/spool/postfix
+						   chown root:root /var/log/mail*
+						   chmod 600 /var/log/mail*
+				  		   default_process_limit = 100
+						   smtpd_client_connection_count_limit = 10
+						   smtpd_client_connection_rate_limit = 30
+						   queue_minfree = 20971520
+						   header_size_limit = 51200
+						   message_size_limit = 10485760
+						   smtpd_recipient_limit = 100
+INSTALL RKHUNTER (anti-rootkit):
+		- apt-het install rkhunter
+		- config the file /etc/default/rkhunter
