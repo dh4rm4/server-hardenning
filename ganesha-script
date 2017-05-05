@@ -47,51 +47,62 @@ echo -e "\t\t${RED}Ganesha script ${NC}start his duty\n"
 echo -e "${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${NC}\n"
 
 
+
+
 echo -e " [${GRN}+${NC}] change ROOT password"
-#passwd $USER
+passwd $USER
 
 echo -e " [${BLU}?${NC}] Are you on a Raspberry pi ? (yes/no)"
-#read asw
+read asw
+if [ $asw == "yes" ] ;
+then
+	echo -e " [${GRN}+${NC}] change PI password"
+	passwd pi
+fi
 
-#if [ $asw == "yes" ] ;
-#then
-#	echo -e " [${GRN}+${NC}] change PI password"
-#	passwd pi
-#fi
+
 
 echo -e " [${GRN}+${NC}] add frequent automatic updates"
-#(crontab -l 2>/dev/null; echo -e "0 0,2,4,6,8,10,12,14,16,18,20,22 * * * root /usr/bin/apt-get update && /usr/bin/apt-get upgrade -yy") | crontab -
+(crontab -l 2>/dev/null; echo -e "0 0,2,4,6,8,10,12,14,16,18,20,22 * * * root /usr/bin/apt-get update && /usr/bin/apt-get upgrade -yy") | crontab -
 echo -e " [${GRN}+${NC}] restrict crontab to root only"
-#echo -e "all" >> /etc/cron.deny
+echo -e "all" >> /etc/cron.deny
 
-#echo -e " [${BLU}?${NC}] Do you want to disable IPv6 ?
-#(not support for this hardenning script)"
 
-#read asw
 
-#if [ $asw == "yes" ] ;
-#then
+echo -e " [${BLU}?${NC}] Do you want to disable IPv6 ?
+   (not support for this hardenning script)"
+read asw
+if [ $asw == "yes" ] ;
+then
 	echo -e " [${GRN}+${NC}] disable IPv6"
-#	echo -e "
-#net.ipv6.conf.all.disable_ipv6 = 1" >> /etc/sysctl.conf
-#fi
+	echo -e "
+net.ipv6.conf.all.disable_ipv6 = 1" >> /etc/sysctl.conf
+fi
+
+
 
 echo -e " [${GRN}+${NC}] disable PING and BROADCAST request"
-#echo -e "#Ignore ICMP request:
-#net.ipv4.icmp_echo -e_ignore_all = 1
-##Ignore Broadcast request:
-#net.ipv4 .icmp_echo -e_ignore_broadcasts = 1#" >> /etc/sysctl.conf
+echo -e "#Ignore ICMP request:
+net.ipv4.icmp_echo -e_ignore_all = 1
+#Ignore Broadcast request:
+net.ipv4 .icmp_echo -e_ignore_broadcasts = 1#" >> /etc/sysctl.conf
+
+
 
 echo -e " [${GRN}+${NC}] change /boot permissions to read only"
-#sed -i 's/0       2/1       2/g' /etc/fstab
+sed -i 's/0       2/1       2/g' /etc/fstab
+
+
 
 echo -e " [${GRN}+${NC}] set ssh banner"
-#echo -e "This is a private server.
-#If you are not allow to access to it, you should disconnect
-#
-#/!\ All connections are monitored and recorded /!\
-#" > /etc/motd
-#sed -i 's/PrintLastLog yes/PrintLastLog no/g' /etc/ssh/sshd_config
+echo -e "This is a private server.
+If you are not allow to access to it, you should disconnect
+
+/!\ All connections are monitored and recorded /!\
+" > /etc/motd
+sed -i 's/PrintLastLog yes/PrintLastLog no/g' /etc/ssh/sshd_config
+
+
 
 echo -e " [${BLU}?${NC}] do you want to set your local variables as en_US.UTF-8 ? (yes/no)"
 read asw
@@ -125,12 +136,16 @@ Please choose the locales you accept before
 	dpkg-reconfigure locales
 fi
 
+
+
 echo -e " [${BLU}?${NC}] do you want to install rkhunter ? (yes/no)"
 read asw
 if [ $asw == "yes" ] ;
 then
 	apt-get install -yy rkhunter
 fi
+
+
 
 echo -e " [${GRN}+${NC}] change permissions for few commands :
 gcc* | make | apt-get | aptitude | dpkg* | fail2ban | netstat | crontab | curl | wget | locate | logger"
