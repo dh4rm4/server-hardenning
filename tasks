@@ -1,6 +1,4 @@
 - CHANGE PASSWORD:
-  - su
-  - sudo
   - basic user: pi for raspbian
 
 - AUTOMATISATION OF TASK:
@@ -33,11 +31,11 @@ SSHD_CONFIG:
 	CHANGE LOG BANNER
 	_ LogLevel VERBOSE
 	_ PermitRootLogin no
-	_ AllowTcpForwarding no
-	_ X11Forwarding no
-	_ change connection port
+#	_ AllowTcpForwarding no
+#	_ X11Forwarding no
+#	_ change connection port
 CHECK LOCALES
-	  _ sudo dpkg-reconfigure locales
+_ sudo dpkg-reconfigure locales
 	  _ add en_US.UTF-8
 
 LIMIT RIGHTS FOR CMD:

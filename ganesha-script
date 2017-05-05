@@ -1,0 +1,149 @@
+#!/bin/bash
+
+GRN='\033[0;32m'
+RED='\033[0;31m'
+BLU='\033[1;34m'
+NC='\033[0m'
+A='\033[0;34m'
+B='\033[0;31m'
+C='\033[0;32m'
+D='\033[0;33m'
+E='\033[0;34m'
+F='\033[0;35m'
+G='\033[0;36m'
+H='\033[0;28m'
+I='\033[2;33m'
+J='\033[3;31m'
+
+
+if [[ $EUID -ne 0 ]];
+then
+	echo -e " [${RED}!${NC}] I cannot be run as mortal. Try again as root"
+	exit 1
+fi
+
+echo -e "
+\t                    _.!._
+\t                   /O*@*O\\
+\t                  <\\@(_)@/>
+\t         ,;,   .--;\`     \`;--.   ,
+\t         O@O_ /   |d     b|   \\ _hnn
+\t         | \`/ \\   |       |   / \\\` |
+\t         &&&&  :##;\\     /;##;  &&&&
+\t         |  \\ / \`##/|   |##'  \\ /  |
+\t         \\   %%%%\`</|   |#'\`%%%%   /
+\t          '._|_ \\   |   |'  / _|_.'
+\t            _/  /   \\   \\   \\  \\
+\t           /!\`)(     '.  '-._&&&&
+\t          ( =}/##,    o'--.. _\`\\/
+\t           \\=/::\`##########'\\==/
+\t	    /:::::/()\`Y\`()\\:::::\\
+\t            \\::::( () | () )::::/
+\t             \`\"\"\"\`-\`'-'-'\`-'\"\"\"\`
+"
+
+echo -e "${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${NC}\n"
+echo -e "\t\t${RED}Ganesha script ${NC}start his duty\n"
+echo -e "${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${NC}\n"
+
+
+echo -e " [${GRN}+${NC}] change ROOT password"
+#passwd $USER
+
+echo -e " [${BLU}?${NC}] Are you on a Raspberry pi ? (yes/no)"
+#read asw
+
+#if [ $asw == "yes" ] ;
+#then
+#	echo -e " [${GRN}+${NC}] change PI password"
+#	passwd pi
+#fi
+
+echo -e " [${GRN}+${NC}] add frequent automatic updates"
+#(crontab -l 2>/dev/null; echo -e "0 0,2,4,6,8,10,12,14,16,18,20,22 * * * root /usr/bin/apt-get update && /usr/bin/apt-get upgrade -yy") | crontab -
+echo -e " [${GRN}+${NC}] restrict crontab to root only"
+#echo -e "all" >> /etc/cron.deny
+
+#echo -e " [${BLU}?${NC}] Do you want to disable IPv6 ?
+#(not support for this hardenning script)"
+
+#read asw
+
+#if [ $asw == "yes" ] ;
+#then
+	echo -e " [${GRN}+${NC}] disable IPv6"
+#	echo -e "
+#net.ipv6.conf.all.disable_ipv6 = 1" >> /etc/sysctl.conf
+#fi
+
+echo -e " [${GRN}+${NC}] disable PING and BROADCAST request"
+#echo -e "#Ignore ICMP request:
+#net.ipv4.icmp_echo -e_ignore_all = 1
+##Ignore Broadcast request:
+#net.ipv4 .icmp_echo -e_ignore_broadcasts = 1#" >> /etc/sysctl.conf
+
+echo -e " [${GRN}+${NC}] change /boot permissions to read only"
+#sed -i 's/0       2/1       2/g' /etc/fstab
+
+echo -e " [${GRN}+${NC}] set ssh banner"
+#echo -e "This is a private server.
+#If you are not allow to access to it, you should disconnect
+#
+#/!\ All connections are monitored and recorded /!\
+#" > /etc/motd
+#sed -i 's/PrintLastLog yes/PrintLastLog no/g' /etc/ssh/sshd_config
+
+echo -e " [${BLU}?${NC}] do you want to set your local variables as en_US.UTF-8 ? (yes/no)"
+read asw
+if [ $asw == "yes" ];
+then
+	echo -e " [${BLU}?${NC}] set en_US.UTF-8 ? (yes/no)"
+	read asw
+	if [ $asw == "yes" ];
+	then
+		echo -e " [${GRN}+${NC}] setting en_US.UTF-8"
+		locale-gen "en_US.UTF-8"
+	fi
+	echo -e " [${BLU}?${NC}] set fr_FR.UTF-8 ? (yes/no)"
+	read asw
+	if [ $asw == "yes" ];
+	then
+		echo -e " [${GRN}+${NC}] setting fr_FR.UTF-8"
+		locale-gen "fr_FR.UTF-8"
+	fi
+	echo -e " [${BLU}?${NC}] set en_GB.UTF-8 ? (yes/no)"
+	read asw
+	if [ $asw == "yes" ];
+	then
+		echo -e " [${GRN}+${NC}] setting en_GB.UTF-8"
+		locale-gen "en_GB.UTF-8"
+	fi
+	echo -e " [${RED}!${NC}] dpkh-reconfigure will open an interface.
+Please choose the locales you accept before
+(press a key to access to the interface)"
+	read asw
+	dpkg-reconfigure locales
+fi
+
+echo -e " [${BLU}?${NC}] do you want to install rkhunter ? (yes/no)"
+read asw
+if [ $asw == "yes" ] ;
+then
+	apt-get install -yy rkhunter
+fi
+
+echo -e " [${GRN}+${NC}] change permissions for few commands :
+gcc* | make | apt-get | aptitude | dpkg* | fail2ban | netstat | crontab | curl | wget | locate | logger"
+chmod o-x /usr/bin/gcc* 2>&-
+chmod o-x /usr/bin/make 2>&-
+chmod o-x /usr/bin/apt-get 2>&-
+chmod o-x /usr/bin/aptitude 2>&-
+chmod o-x /usr/bin/dpkg* 2>&-
+chmod o-x /usr/bin/fail2ban* 2>&-
+chmod o-x /bin/netstat 2>&-
+chmod o-x /usr/bin/crontab 2>&-
+chmod o-x /usr/bin/curl 2>&-
+chmod o-x /usr/bin/wget 2>&-
+chmod o-x /usr/bin/locate 2>&-
+chmod o-x /usr/bin/logger 2>&-
+chmod o-x /usr/bin/rkhunter 2>&-
