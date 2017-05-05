@@ -1,0 +1,42 @@
+#!/bin/bash
+
+GRN='\033[0;32m'
+RED='\033[0;31m'
+BLU='\033[1;34m'
+NC='\033[0m'
+A='\033[0;34m'
+B='\033[0;31m'
+C='\033[0;32m'
+D='\033[0;33m'
+E='\033[0;34m'
+F='\033[0;35m'
+G='\033[0;36m'
+H='\033[0;28m'
+I='\033[2;33m'
+J='\033[3;31m'
+
+
+if [[ $EUID -ne 0 ]];
+then
+	echo -e " [${RED}!${NC}] I cannot be run as mortal. Try again as root"
+	exit 1
+fi
+
+
+echo -e " [${GRN}+${NC}] add frequent automatic updates"
+grep -q "/usr/bin/apt-get upgrade" /var/spool/cron/crontabs/root
+if [ $? != 0 ] ;
+then
+	(crontab -l 2>/dev/null; echo -e "0 0,2,4,6,8,10,12,14,16,18,20,22 * * * root /usr/bin/apt-get update && /usr/bin/apt-get upgrade -yy") | crontab -
+else
+	echo -e " [${E}✘${NC}] this parameter already exist"
+fi
+
+echo -e " [${GRN}+${NC}] restrict crontab to root only"
+grep -q "all" /etc/cron.deny
+if [ $? != 0 ] ;
+then
+	echo -e "all" >> /etc/cron.deny
+else
+	echo -e " [${E}✘${NC}] this parameter already exist"
+fi
