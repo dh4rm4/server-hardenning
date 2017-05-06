@@ -16,7 +16,6 @@ printf " [${BLU}?${NC}] do you want to install rkhunter ? (yes/no)   "
 read asw
 if [ $asw == "yes" ] ;
 then
-
 	apt-get install -yy rkhunter >&-
 else
 	exit

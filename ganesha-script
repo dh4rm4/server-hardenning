@@ -47,7 +47,7 @@ echo -e "\t\t${RED}Ganesha script ${NC}start his duty\n"
 echo -e "${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${A}=${B}=${C}=${D}=${E}=${F}=${G}=${H}=${I}=${J}=${NC}\n"
 
 
-
+./basics
 ./set_passwd
 ./cron_tasks
 ./IPv6_config

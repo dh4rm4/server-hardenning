@@ -16,8 +16,9 @@ printf " [${BLU}?${NC}] do you want to configure iptables ? (yes/no)   "
 read asw
 if [ $asw == "yes" ] ;
 then
-	printf " [${GRN}+${NC}] "
-	git clone https://github.com/dh4rm4/iptables_tools.git 1>&-
+	echo -e " [${GRN}+${NC}] cloning the iptables config repository"
+	git clone https://github.com/dh4rm4/iptables_tools.git 2>&1 >&/dev/null
+	echo -e " [${GRN}+${NC}] start iptables config"
 	./iptables_tools/init_rules
 else
 	exit
