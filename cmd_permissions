@@ -24,8 +24,10 @@ fi
 
 
 echo -e " [${GRN}+${NC}] change permissions for few commands :
-     gcc* | make | apt-get | aptitude | dpkg* | fail2ban | netstat |
-     crontab | curl | wget | locate | logger"
+     gcc*     | make    | apt-get
+     aptitude | dpkg*   | fail2ban
+     netstat  | crontab | curl
+     wget     | locate  | logger"
 chmod o-x /usr/bin/gcc* 2>&-
 chmod o-x /usr/bin/make 2>&-
 chmod o-x /usr/bin/apt-get 2>&-

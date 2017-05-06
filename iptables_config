@@ -1,0 +1,24 @@
+#!/bin/bash
+
+GRN='\033[0;32m'
+RED='\033[0;31m'
+BLU='\033[1;34m'
+NC='\033[0m'
+
+
+if [[ $EUID -ne 0 ]];
+then
+	echo -e " [${RED}!${NC}] I cannot be run as mortal. Try again as root"
+	exit 1
+fi
+
+printf " [${BLU}?${NC}] do you want to configure iptables ? (yes/no)   "
+read asw
+if [ $asw == "yes" ] ;
+then
+	printf " [${GRN}+${NC}] "
+	git clone https://github.com/dh4rm4/iptables_tools.git 1>&-
+	./iptables_tools/init_rules
+else
+	exit
+fi
