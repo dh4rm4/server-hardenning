@@ -15,7 +15,7 @@ fi
 echo -e " [${GRN}+${NC}] updating your system"
 apt-get -qq update  2>&1 >&/dev/null
 echo -e " [${GRN}+${NC}] upgrading your system"
-apt-get -qq upgrade -yy 2>&1 >&/dev/null
+apt-get -qq dist-upgrade -yy 2>&1 >&/dev/null
 echo -e " [${GRN}+${NC}] installation of
      sudo  |  git  |  htop
      wget  |  curl |  emacs"
