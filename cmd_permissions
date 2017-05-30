@@ -17,7 +17,8 @@ echo -e " [${GRN}+${NC}] change permissions for few commands :
      gcc*     | make    | apt-get
      aptitude | dpkg*   | fail2ban
      netstat  | crontab | curl
-     wget     | locate  | logger"
+     wget     | locate  | logger
+     ifconfig | sysctl"
 chmod o-x /usr/bin/gcc* 2>&-
 chmod o-x /usr/bin/make 2>&-
 chmod o-x /usr/bin/apt-get 2>&-
@@ -31,3 +32,5 @@ chmod o-x /usr/bin/wget 2>&-
 chmod o-x /usr/bin/locate 2>&-
 chmod o-x /usr/bin/logger 2>&-
 chmod o-x /usr/bin/rkhunter 2>&-
+chmod o-x /sbin/ifconfig 2>&-
+chmod o-x /sbin/sysctl 2>&-
