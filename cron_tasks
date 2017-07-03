@@ -17,7 +17,7 @@ echo -e " [${GRN}+${NC}] add frequent automatic updates"
 grep -q "/usr/bin/apt-get upgrade" /var/spool/cron/crontabs/root
 if [ $? != 0 ] ;
 then
-	(crontab -l 2>/dev/null; echo -e "0 0,2,4,6,8,10,12,14,16,18,20,22 * * * root /usr/bin/apt-get update && /usr/bin/apt-get upgrade -yy") | crontab -
+	(crontab -l 2>/dev/null; echo -e "0 0,2,4,6,8,10,12,14,16,18,20,22 * * * root /usr/bin/apt-get update && /usr/bin/apt-get dist-upgrade -yy") | crontab -
 else
 	echo -e " [${E}✘${NC}] this parameter already exist"
 fi
